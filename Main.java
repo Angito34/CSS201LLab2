@@ -5,8 +5,10 @@ class Main {
     public static void main(String[] args) {
         //define variables
 
-        System.out.println("You need to fix this code!!");
+        //System.out.println("You need to fix this code!!");
         char choice = 'c';
+        
+        
 
  
 
@@ -14,7 +16,7 @@ class Main {
         Scanner scanner = new Scanner(System.in);
  
         //get the value of choice from displayMenu(scanner)
- 
+        choice = displayMenu(scanner);
         
         //as long as user wants to continue
         while (choice != 'c') {
@@ -27,6 +29,9 @@ class Main {
 
                 //case b: convert from decimal to binary 
                 case 'b':
+                    if (decToBin(scanner)== -1){
+                        System.out.println("Invalid number");
+                    }
                     break;
 
                 //case c: exit program
@@ -35,6 +40,7 @@ class Main {
                     break;
             }
             // add another call to displayMenu
+            choice = displayMenu(scanner);
         }  
 
         scanner.close();
@@ -48,10 +54,12 @@ class Main {
         //while loop that repeats if the choice made is not a, b, or c
         while (choice != 'a' && choice != 'b' && choice != 'c'){
             //display menu choices
- 
-
+            System.out.println("Menu: ");
+            System.out.println("a. Convert binary to decimal");
+            System.out.println("b. Convert decimal to binary");
+            System.out.println("c. Exit");
             //prompt user to enter choice
-
+            System.out.println(" a, b, or c: ");
 
             //this code has been provided since scanner input is new...
             String input = scanner.nextLine().trim().toLowerCase();
@@ -71,7 +79,7 @@ class Main {
         int pow = 1;
 
         //prompt user to enter a binary number
-
+        System.out.println("Enter a binary number: ");
         //use the following to get scanner input
         String binary = scanner.nextLine().trim();
 
@@ -81,9 +89,18 @@ class Main {
         //      if charAt is '1': decimal += pow
         //      else if charAt is not '0': return -1
         //      pow *= 2
+        for (int i = binary.length() -1; i>= 0; i--){
+            if (binary.charAt(i)== '1'){
+                decimal += pow;
+            }
+            else if ( binary.charAt(i) != '0'){
+                return -1;
+            }
+            pow *= 2;
+        }
 
         //display Binary input and Decimal output
-
+        System.out.println("binary: " + binary + " Decimal: " + decimal);
         return 1;
     }
 
@@ -92,13 +109,19 @@ class Main {
     public static boolean isDigits(String str) {
         //loop str
         //  use Character.isDigit function to check each character for valid numeric value
-
+        for ( int i = 0; i < str.length(); i++){
+        
+            if (Character.isDigit(str.charAt(i))){
+                return true;
+            }
+        }
         return false;
     }
 
     public static int decToBin(Scanner scanner) {
     
         //prompt user to enter a binary number
+        System.out.println("Enter a decimal number: ");
 
 
         //get scanner input (similar to above)
@@ -110,9 +133,13 @@ class Main {
         //define other variables needed for conversion including output string for Binary value
         String binary = new String();
 
+
         while (decimal !=0){
             //get remainder of modulus 2 & add to binary string
             //update decimal to cut off last digit
+            //building binary string right to left explained to me by copilot 
+            binary = (decimal % 2) + binary;
+            decimal = decimal / 2;
         }
 
         
